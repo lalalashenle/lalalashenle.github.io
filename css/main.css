@@ -2843,6 +2843,13 @@ ul.breadcrumb li:last-child {
     padding: 10px 12px;
   }
 }
-.main .main-inner {
-  width: 768px !important;
+.main {
+  width: calc(100% - 340px);
+}
+.main .main-inner .post-body {
+  font-size: 14px;
+  line-height: 16px;
+}
+.site-subtitle {
+  font-size: 13px;
 }
