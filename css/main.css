@@ -2851,9 +2851,39 @@ ul.breadcrumb li:last-child {
   line-height: 16px;
 }
 .main {
-  width: calc(100% - 340px);
+  width: calc(100% - 260px);
 }
 .main .main-inner .post-body {
   font-size: 14px;
   line-height: 16px;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .main {
+    width: 100% !important;
+  }
+}
+@media (max-width: 767px) {
+  .main {
+    width: 100% !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .main .header {
+    width: auto !important;
+  }
+}
+@media (max-width: 767px) {
+  .main .header {
+    width: auto !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .main .main-inner {
+    width: auto !important;
+  }
+}
+@media (max-width: 767px) {
+  .main .main-inner {
+    width: auto !important;
+  }
 }
