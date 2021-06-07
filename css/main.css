@@ -2853,7 +2853,7 @@ ul.breadcrumb li:last-child {
 .main {
   width: calc(100% - 260px);
 }
-.main .main-inner .post-body {
+.main .main-inner .post-body p {
   font-size: 14px;
   line-height: 16px;
 }
