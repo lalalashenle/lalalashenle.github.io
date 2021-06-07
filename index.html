@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -176,110 +176,6 @@
 
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/07/leetcode0494/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="skwnag">
-      <meta itemprop="description" content="暨南大学 · 网络空间安全">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Skwang's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/07/leetcode0494/" class="post-title-link" itemprop="url">LeetCode-0494-目标和-题解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-07 23:35:55 / Modified: 23:56:34" itemprop="dateCreated datePublished" datetime="2021-06-07T23:35:55+08:00">2021-06-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/LeeCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">LeeCode题解</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/06/07/leetcode0494/question.png" alt="图裂了吗？"></p>
-<p>LeetCode进入了背包月，今天又是一道魔改背包问题。</p>
-<p>审题后，注意到：</p>
-<p>若设nums数集可分解为正数集Positive以及负数集Negative，则：Positive + Negative = sumNums</p>
-<p>而target的定义为：Postive + (-Negative) = target，即：Positive = target + Negative</p>
-<p>容易得到：Positive = target + sumNums - Positive，即：Positive = (target + sumNums) / 2</p>
-<p>因为 0 &lt;= nums[i] 且 nums[i] 为自然数，故Positive一定为自然数。若Positive不为int型数，则考虑nums中不存在符合题意的和为target的正负数集，此时应 return 0</p>
-<p>至此，可发现此题实际为<strong>0-1背包问题</strong>，设计DP数组，DP(i, j)代表取前i个数，当和为j时的最大个数。</p>
-<p>边界为：DP(0, 0) = 1，因为取0个数时，只能得到和为0一种结果。同时也可得：DP(0, j) = 0</p>
-<p>状态转移方程：</p>
-<p>取和(即j)时，考虑两种情况：</p>
-<ol>
-<li><p>j小于当前可取的数(nums[i])，此时：DP(i, j) = DP(i - 1, j)</p>
-</li>
-<li><p>j大于等于当前可取的数(nums[i])，此时：</p>
-<ol>
-<li>不选择加入nums[i]，则：DP(i, j) = DP(i - 1, j)</li>
-<li>选择加入nums[i]，则：DP(i, j) = DP(i - 1, j - nums[i])</li>
-</ol>
-<p>则：DP(i, j) = DP(i - 1, j) + DP(i - 1, j - nums[i])</p>
-</li>
-</ol>
-<p>综上得状态转移方程：</p>
-<p>DP(i, j) =  DP(i - 1, j) + DP(i - 1, j - nums[i])    , j &gt;= nums[i]<br>                DP(i - 1, j)                                          , j &lt; nums[i]</p>
-<p>代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 0494 目标和</span><br><span class="line"># @Level    : medium</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/target-sum/</span><br><span class="line"># @Date     : 2021-06-07</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def findTargetSumWays(self, nums: List[int], target: int) -&gt; int:</span><br><span class="line">        sum_nums = 0</span><br><span class="line">        len_nums = len(nums)</span><br><span class="line">        for n in nums:</span><br><span class="line">            sum_nums += n</span><br><span class="line">        if (target + sum_nums) % 2 != 0:</span><br><span class="line">            return 0</span><br><span class="line">        sum_positive = (target + sum_nums) // 2</span><br><span class="line">        # dp(i, j) --&gt; 取前i个数，和为j的个数</span><br><span class="line">        memo = [[0 for j in range(0, sum_positive + 1)] for i in range(0, len_nums + 1)]</span><br><span class="line">        memo[0][0] = 1</span><br><span class="line">        for i in range(1, len_nums + 1):</span><br><span class="line">            for j in range(0, sum_positive + 1):</span><br><span class="line">                memo[i][j] = memo[i - 1][j]</span><br><span class="line">                if j &gt;= nums[i - 1]:</span><br><span class="line">                    memo[i][j] += memo[i - 1][j - nums[i - 1]]</span><br><span class="line">        return memo[len_nums][sum_positive]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">nums = [1]</span><br><span class="line">target = 2</span><br><span class="line">print(S.findTargetSumWays(nums, target))</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/07/leetcode0494/result.png" alt="图裂了吗？"></p>
-<p>提交时发现了自己一年前的提交代码，现在已经有点看不懂了哈哈 : )</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findTargetSumWays(vector&lt;int&gt;&amp; nums, int S) &#123;</span><br><span class="line">    	if(S &gt; 1000 || S &lt; -1000)</span><br><span class="line">    		return 0;</span><br><span class="line">		int n = nums.size();</span><br><span class="line">		vector&lt;vector&lt;int&gt; &gt; memo(n, vector&lt;int&gt;(2001, 0)); // 和的取值范围：[-1000, 1000] </span><br><span class="line">		memo[0][nums[0] + 1000] = 1;</span><br><span class="line">		memo[0][-nums[0] + 1000] += 1;</span><br><span class="line">		for(int i = 1; i &lt; n; i++) &#123;</span><br><span class="line">			for(int j = 0; j &lt; 2001; j++) &#123;</span><br><span class="line">				if(j + nums[i] &gt;= 0 &amp;&amp; j + nums[i] &lt; 2001)</span><br><span class="line">					memo[i][j] += memo[i - 1][j + nums[i]];</span><br><span class="line">				if(j - nums[i] &gt;= 0 &amp;&amp; j - nums[i] &lt; 2001)</span><br><span class="line">					memo[i][j] += memo[i - 1][j - nums[i]];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		return memo[n - 1][S + 1000];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
