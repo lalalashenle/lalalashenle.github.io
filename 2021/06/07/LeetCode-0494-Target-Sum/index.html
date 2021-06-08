@@ -22,25 +22,32 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;lalalashenle.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;width&quot;:240,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script><script src="/js/config.js"></script>
-<meta name="description" content="暨南大学 · 网络空间安全">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Skwang&#39;s Blog">
-<meta property="og:url" content="https://lalalashenle.github.io/index.html">
+<meta name="description" content="LeetCode进入了背包月，今天又是一道魔改背包问题。 审题后，注意到： 若设nums数集可分解为正数集Positive以及负数集Negative，则：Positive + Negative &#x3D; sumNums 而target的定义为：Postive + (-Negative) &#x3D; target，即：Positive &#x3D; target + Negative 容易得到：Positive &#x3D; ta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode-0494-Target Sum-题解">
+<meta property="og:url" content="https://lalalashenle.github.io/2021/06/07/LeetCode-0494-Target-Sum/index.html">
 <meta property="og:site_name" content="Skwang&#39;s Blog">
-<meta property="og:description" content="暨南大学 · 网络空间安全">
+<meta property="og:description" content="LeetCode进入了背包月，今天又是一道魔改背包问题。 审题后，注意到： 若设nums数集可分解为正数集Positive以及负数集Negative，则：Positive + Negative &#x3D; sumNums 而target的定义为：Postive + (-Negative) &#x3D; target，即：Positive &#x3D; target + Negative 容易得到：Positive &#x3D; ta">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/06/07/LeetCode-0494-Target-Sum/question.png">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/06/07/LeetCode-0494-Target-Sum/result.png">
+<meta property="article:published_time" content="2021-06-07T15:35:55.000Z">
+<meta property="article:modified_time" content="2021-06-08T15:30:31.383Z">
 <meta property="article:author" content="skwnag">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="LeetCode">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lalalashenle.github.io/2021/06/07/LeetCode-0494-Target-Sum/question.png">
 
 
-<link rel="canonical" href="https://lalalashenle.github.io/">
+<link rel="canonical" href="https://lalalashenle.github.io/2021/06/07/LeetCode-0494-Target-Sum/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:true,&quot;isPost&quot;:false,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:&quot;&quot;,&quot;permalink&quot;:&quot;&quot;,&quot;path&quot;:&quot;index.html&quot;,&quot;title&quot;:&quot;&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;06&#x2F;07&#x2F;LeetCode-0494-Target-Sum&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;07&#x2F;LeetCode-0494-Target-Sum&#x2F;&quot;,&quot;title&quot;:&quot;LeetCode-0494-Target Sum-题解&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>Skwang's Blog</title>
+<title>LeetCode-0494-Target Sum-题解 | Skwang's Blog</title>
   
 
 
@@ -175,197 +182,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="skwnag">
-      <meta itemprop="description" content="暨南大学 · 网络空间安全">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Skwang's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-title-link" itemprop="url">CTF-CWCTF 2019-我有一个数据库-题解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-08 22:59:43 / Modified: 23:29:11" itemprop="dateCreated datePublished" datetime="2021-06-08T22:59:43+08:00">2021-06-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CTF%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">CTF题解</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/1.png"></p>
-<p>打开靶机网站，出现的是白茫茫的一片。</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/5.png"></p>
-<p>查看网页源代码，也没有看到任何hints。</p>
-<p>利用dirsearch.py扫描一下网站目录：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/2.png"></p>
-<p>题目”我有一个数据库”实际也暗示存在”phpmyadmin”目录了。输入地址跳转后，得到一些信息：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/3.png"></p>
-<p>phpMyAdmin版本为4.8.1，存在远程文件包含漏洞，代码审计如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static $goto_whitelist = array(</span><br><span class="line">	&#x27;db_datadict.php&#x27;,</span><br><span class="line">	&#x27;db_sql.php&#x27;,</span><br><span class="line">    &#x27;db_events.php&#x27;,</span><br><span class="line">    &#x27;db_export.php&#x27;,</span><br><span class="line">    &#x27;db_importdocsql.php&#x27;,</span><br><span class="line">    &#x27;db_multi_table_query.php&#x27;,</span><br><span class="line">    &#x27;db_structure.php&#x27;,</span><br><span class="line">    &#x27;db_import.php&#x27;,</span><br><span class="line">    	...</span><br><span class="line">    	...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$_page = urldecode($page);</span><br><span class="line">$_page = mb_substr(</span><br><span class="line">    $_page,</span><br><span class="line">    0,</span><br><span class="line">    mb_strpos($_page . &#x27;?&#x27;, &#x27;?&#x27;)</span><br><span class="line">);</span><br><span class="line">if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return false;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出，若’?’前的page在白名单中，则return true。可通过双重编码进行相应绕过，payload如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?target=db_datadict.php%253f+(&quot;文件包含路径&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>“%253f”第一次解码为”%3f”，第二次解码为”?”，此时构造的payload已经顺利通过$_page的检查方法。而第一次解码得到的”%3f”会上传至index.php的”$_REQUEST[‘target’]”中，可以进行文件包含操作。</p>
-<p>读取/etc/passwd，测试是否可以顺利执行文件包含：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/6.jpg"></p>
-<p>测试成功，读取”/flag”即可得到flag。</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/4.png"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="skwnag">
-      <meta itemprop="description" content="暨南大学 · 网络空间安全">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Skwang's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/" class="post-title-link" itemprop="url">LeetCode-1049-Last Stone Weight-II-题解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-08 15:13:27 / Modified: 23:31:03" itemprop="dateCreated datePublished" datetime="2021-06-08T15:13:27+08:00">2021-06-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">LeetCode题解</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/question.png"></p>
-<p>第一次做带放回操作的背包问题。</p>
-<p>首先观察此题如何转化为背包问题。审题后可以看出，最终的石子重量实际上就是一堆石子重量减去另一堆石子重量，这就可以发现实际上这题和”0494-Target Sum”十分想象，前期处理也大体相同。将stones数组划为两个子集Positive和Negative，分别存储系数为+1和-1的数。则sum_stones = Positive + Negative</p>
-<p>可转化为：ans = sum_stones - 2 * Negative，其中ans代表最终剩余的石子重量，也就是题目所要求的值。那么题目要求的是”最小”的剩余石子重量，即：min(ans)，简单求导容易得出结论：Negative越大，则ans越小，同时需满足 sum_stones - 2 * Negative &gt; 0 的约束条件。</p>
-<p>至此，此题已转化为一个通俗0-1背包问题。背包容量为 sum_stones / 2，物品容积与价值皆为stones[i]。构造DP数组DP(i, j)，含义为：当选择前i个物品（即，石子），且背包容量（即，Negative数集的和）为j时，最多能达到多大的物品容积。</p>
-<p>因为已经转化为通俗0-1背包问题了，那么不难构造状态转移方程：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) = MAX(DP(i - 1, j), DP(i - 1, j - stones[i] + stones[i]));</span><br></pre></td></tr></table></figure>
-
-<p>对了，前面提到此题为”带放回操作”的背包问题，那么放回操作是否会对上述构造的状态转移方程产生影响呢？假设有A、B、C三个石子，取A、B两石子碰撞，得 A - B，将 A - B 放回。再取 A - B 与 C两石子碰撞，可得 C - (A - B)，即：C - A + B，相当于取B、C为正数集，A为负数集（注意，只举了一个简单例子，为标明A、B、C大小，有心的朋友可以加入大小的假设再演算一遍，会发现结果是相同的）。故可以发现，”放回操作”实际上并不影响此题对0-1背包的转化，但也确实增加一点题目的思考难度了。</p>
-<p><img src="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/result.png"></p>
-<p>代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 1049 最后一块石头的重量-II</span><br><span class="line"># @Level    : medium</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/last-stone-weight-ii/</span><br><span class="line"># @Date     : 2021-06-08</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def lastStoneWeightII(self, stones: List[int]) -&gt; int:</span><br><span class="line">        sum_s = 0</span><br><span class="line">        len_s = len(stones)</span><br><span class="line">        for s in stones:</span><br><span class="line">            sum_s += s</span><br><span class="line">        memo = [[0 for _ in range(0, sum_s // 2 + 1)] for _ in range(0, len_s + 1)]</span><br><span class="line">        for i in range(1, len_s + 1):</span><br><span class="line">            for j in range(0, sum_s // 2 + 1):</span><br><span class="line">                memo[i][j] = memo[i - 1][j]</span><br><span class="line">                if j &gt;= stones[i - 1]:</span><br><span class="line">                    memo[i][j] = max(memo[i][j], memo[i - 1][j - stones[i - 1]] + stones[i - 1])</span><br><span class="line">        return sum_s - 2 * memo[len_s][sum_s // 2]</span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">stones = [22, 1, 6, 64, 12, 68, 15]     # 2</span><br><span class="line">print(S.lastStoneWeightII(stones))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>当然，既然是0-1背包问题，我们就可以对二维DP数组进行”滚动数组”、”一维空间优化”等优化操作，日后再开贴讨论背包问题的几个优化策略吧 ：）</p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/07/LeetCode-0494-Target-Sum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -378,9 +205,9 @@
       <meta itemprop="name" content="Skwang's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/07/LeetCode-0494-Target-Sum/" class="post-title-link" itemprop="url">LeetCode-0494-Target Sum-题解</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          LeetCode-0494-Target Sum-题解
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -419,7 +246,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/06/07/LeetCode-0494-Target-Sum/question.png" alt="图裂了吗？"></p>
+        <p><img src="/2021/06/07/LeetCode-0494-Target-Sum/question.png" alt="图裂了吗？"></p>
 <p>LeetCode进入了背包月，今天又是一道魔改背包问题。</p>
 <p>审题后，注意到：</p>
 <p>若设nums数集可分解为正数集Positive以及负数集Negative，则：Positive + Negative = sumNums</p>
@@ -453,7 +280,6 @@
 
 
 <p align="right"><strong>致谢：小鹿同学</strong></p>
-      
     </div>
 
     
@@ -461,11 +287,26 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/" rel="next" title="LeetCode-1049-Last Stone Weight-II-题解">
+                  LeetCode-1049-Last Stone Weight-II-题解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
+
 
 
 

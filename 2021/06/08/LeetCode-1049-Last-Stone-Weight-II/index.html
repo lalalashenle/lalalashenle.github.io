@@ -25,26 +25,26 @@
 <meta name="description" content="第一次做带放回操作的背包问题。 首先观察此题如何转化为背包问题。审题后可以看出，最终的石子重量实际上就是一堆石子重量减去另一堆石子重量，这就可以发现实际上这题和”0494-Target Sum”十分想象，前期处理也大体相同。将stones数组划为两个子集Positive和Negative，分别存储系数为+1和-1的数。则sum_stones &#x3D; Positive + Negative 可转化为：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode-1049-Last Stone Weight-II-题解">
-<meta property="og:url" content="https://lalalashenle.github.io/2021/06/08/1049-Last-Stone-Weight-II/index.html">
+<meta property="og:url" content="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/index.html">
 <meta property="og:site_name" content="Skwang&#39;s Blog">
 <meta property="og:description" content="第一次做带放回操作的背包问题。 首先观察此题如何转化为背包问题。审题后可以看出，最终的石子重量实际上就是一堆石子重量减去另一堆石子重量，这就可以发现实际上这题和”0494-Target Sum”十分想象，前期处理也大体相同。将stones数组划为两个子集Positive和Negative，分别存储系数为+1和-1的数。则sum_stones &#x3D; Positive + Negative 可转化为：">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/1049-Last-Stone-Weight-II/question.png">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/1049-Last-Stone-Weight-II/result.png">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/question.png">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/result.png">
 <meta property="article:published_time" content="2021-06-08T07:13:27.000Z">
-<meta property="article:modified_time" content="2021-06-08T07:39:08.195Z">
+<meta property="article:modified_time" content="2021-06-08T15:31:03.916Z">
 <meta property="article:author" content="skwnag">
 <meta property="article:tag" content="题解">
-<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="LeetCode">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lalalashenle.github.io/2021/06/08/1049-Last-Stone-Weight-II/question.png">
+<meta name="twitter:image" content="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/question.png">
 
 
-<link rel="canonical" href="https://lalalashenle.github.io/2021/06/08/1049-Last-Stone-Weight-II/">
+<link rel="canonical" href="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;06&#x2F;08&#x2F;1049-Last-Stone-Weight-II&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;08&#x2F;1049-Last-Stone-Weight-II&#x2F;&quot;,&quot;title&quot;:&quot;LeetCode-1049-Last Stone Weight-II-题解&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;06&#x2F;08&#x2F;LeetCode-1049-Last-Stone-Weight-II&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;08&#x2F;LeetCode-1049-Last-Stone-Weight-II&#x2F;&quot;,&quot;title&quot;:&quot;LeetCode-1049-Last Stone Weight-II-题解&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
 <title>LeetCode-1049-Last Stone Weight-II-题解 | Skwang's Blog</title>
@@ -141,18 +141,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -193,7 +193,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/08/1049-Last-Stone-Weight-II/">
+    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,7 +218,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-06-08 15:13:27 / Modified: 15:39:08" itemprop="dateCreated datePublished" datetime="2021-06-08T15:13:27+08:00">2021-06-08</time>
+      <time title="Created: 2021-06-08 15:13:27 / Modified: 23:31:03" itemprop="dateCreated datePublished" datetime="2021-06-08T15:13:27+08:00">2021-06-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,7 +240,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="/2021/06/08/1049-Last-Stone-Weight-II/question.png"></p>
+        <p><img src="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/question.png"></p>
 <p>第一次做带放回操作的背包问题。</p>
 <p>首先观察此题如何转化为背包问题。审题后可以看出，最终的石子重量实际上就是一堆石子重量减去另一堆石子重量，这就可以发现实际上这题和”0494-Target Sum”十分想象，前期处理也大体相同。将stones数组划为两个子集Positive和Negative，分别存储系数为+1和-1的数。则sum_stones = Positive + Negative</p>
 <p>可转化为：ans = sum_stones - 2 * Negative，其中ans代表最终剩余的石子重量，也就是题目所要求的值。那么题目要求的是”最小”的剩余石子重量，即：min(ans)，简单求导容易得出结论：Negative越大，则ans越小，同时需满足 sum_stones - 2 * Negative &gt; 0 的约束条件。</p>
@@ -249,12 +249,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) = MAX(DP(i - 1, j), DP(i - 1, j - stones[i] + stones[i]));</span><br></pre></td></tr></table></figure>
 
 <p>对了，前面提到此题为”带放回操作”的背包问题，那么放回操作是否会对上述构造的状态转移方程产生影响呢？假设有A、B、C三个石子，取A、B两石子碰撞，得 A - B，将 A - B 放回。再取 A - B 与 C两石子碰撞，可得 C - (A - B)，即：C - A + B，相当于取B、C为正数集，A为负数集（注意，只举了一个简单例子，为标明A、B、C大小，有心的朋友可以加入大小的假设再演算一遍，会发现结果是相同的）。故可以发现，”放回操作”实际上并不影响此题对0-1背包的转化，但也确实增加一点题目的思考难度了。</p>
-<p><img src="/2021/06/08/1049-Last-Stone-Weight-II/result.png"></p>
+<p><img src="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/result.png"></p>
 <p>代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 1049 最后一块石头的重量-II</span><br><span class="line"># @Level    : medium</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/last-stone-weight-ii/</span><br><span class="line"># @Date     : 2021-06-08</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def lastStoneWeightII(self, stones: List[int]) -&gt; int:</span><br><span class="line">        sum_s = 0</span><br><span class="line">        len_s = len(stones)</span><br><span class="line">        for s in stones:</span><br><span class="line">            sum_s += s</span><br><span class="line">        memo = [[0 for _ in range(0, sum_s // 2 + 1)] for _ in range(0, len_s + 1)]</span><br><span class="line">        for i in range(1, len_s + 1):</span><br><span class="line">            for j in range(0, sum_s // 2 + 1):</span><br><span class="line">                memo[i][j] = memo[i - 1][j]</span><br><span class="line">                if j &gt;= stones[i - 1]:</span><br><span class="line">                    memo[i][j] = max(memo[i][j], memo[i - 1][j - stones[i - 1]] + stones[i - 1])</span><br><span class="line">        return sum_s - 2 * memo[len_s][sum_s // 2]</span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">stones = [22, 1, 6, 64, 12, 68, 15]     # 2</span><br><span class="line">print(S.lastStoneWeightII(stones))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>当然，既然是0-1背包问题，我们就可以对二维DP数组进行”滚动数组”、”一维空间优化”等优化操作，日后再开贴讨论背包问题的几个优化策略吧 ：）</p>
-
+<p align="right"><strong>致谢：小鹿同学</strong></p>
     </div>
 
     
@@ -264,18 +264,21 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
-              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/06/07/0494-Target-Sum/" rel="prev" title="LeetCode-0494-Target Sum-题解">
+                <a href="/2021/06/07/LeetCode-0494-Target-Sum/" rel="prev" title="LeetCode-0494-Target Sum-题解">
                   <i class="fa fa-chevron-left"></i> LeetCode-0494-Target Sum-题解
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="next" title="CTF-CWCTF 2019-我有一个数据库-题解">
+                  CTF-CWCTF 2019-我有一个数据库-题解 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
