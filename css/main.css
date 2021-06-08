@@ -2851,7 +2851,7 @@ ul.breadcrumb li:last-child {
   line-height: 16px;
 }
 .main {
-  width: calc(100% - 260px);
+  width: calc(100% - 320px);
 }
 .main .main-inner article .post-body {
   font-size: 14px;
