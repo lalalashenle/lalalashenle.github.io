@@ -1035,7 +1035,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-09 13:43:43" itemprop="dateModified" datetime="2021-06-09T13:43:43+08:00">2021-06-09</time>
+        <time title="Modified: 2021-06-16 20:25:37" itemprop="dateModified" datetime="2021-06-16T20:25:37+08:00">2021-06-16</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1060,27 +1060,28 @@
           <p><img src="/2021/06/07/LeetCode-0494-Target-Sum/question.png" alt="图裂了吗？"></p>
 <p>LeetCode进入了背包月，今天又是一道魔改背包问题。</p>
 <p>审题后，注意到：</p>
-<p>若设nums数集可分解为正数集Positive以及负数集Negative，则：Positive + Negative = sumNums</p>
-<p>而target的定义为：Postive + (-Negative) = target，即：Positive = target + Negative</p>
-<p>容易得到：Positive = target + sumNums - Positive，即：Positive = (target + sumNums) / 2</p>
-<p>因为 0 &lt;= nums[i] 且 nums[i] 为自然数，故Positive一定为自然数。若Positive不为int型数，则考虑nums中不存在符合题意的和为target的正负数集，此时应 return 0</p>
+<p>若设<code>nums</code>数集可分解为正数集<code>Positive</code>以及负数集<code>Negative</code>，则：<code>Positive + Negative = sumNums</code></p>
+<p>而<code>target</code>的定义为：<code>Postive + (-Negative) = target</code>，即：<code>Positive = target + Negative</code></p>
+<p>容易得到：<code>Positive = target + sumNums - Positive</code>，即：<code>Positive = (target + sumNums) / 2</code></p>
+<p>因为 <code>0 &lt;= nums[i]</code> 且 <code>nums[i]</code> 为自然数，故<code>Positive</code>一定为自然数。若<code>Positive</code>不为int型数，则考虑<code>nums</code>中不存在符合题意的和为target的正负数集，此时应 <code>return 0</code></p>
 <p>至此，可发现此题实际为<strong>0-1背包问题</strong>，设计DP数组，DP(i, j)代表取前i个数，当和为j时的最大个数。</p>
-<p>边界为：DP(0, 0) = 1，因为取0个数时，只能得到和为0一种结果。同时也可得：DP(0, j) = 0</p>
+<p>边界为：<code>DP(0, 0) = 1</code>，因为取0个数时，只能得到和为0一种结果。同时也可得：<code>DP(0, j) = 0</code></p>
 <p>状态转移方程：</p>
 <p>取和(即j)时，考虑两种情况：</p>
 <ol>
-<li><p>j小于当前可取的数(nums[i])，此时：DP(i, j) = DP(i - 1, j)</p>
+<li><p><code>j</code>小于当前可取的数(nums[i])，此时：<code>DP(i, j) = DP(i - 1, j)</code></p>
 </li>
-<li><p>j大于等于当前可取的数(nums[i])，此时：</p>
+<li><p><code>j</code>大于等于当前可取的数(nums[i])，此时：</p>
 <ol>
-<li>不选择加入nums[i]，则：DP(i, j) = DP(i - 1, j)</li>
-<li>选择加入nums[i]，则：DP(i, j) = DP(i - 1, j - nums[i])</li>
+<li>不选择加入nums[i]，则：<code>DP(i, j) = DP(i - 1, j)</code></li>
+<li>选择加入nums[i]，则：<code>DP(i, j) = DP(i - 1, j - nums[i])</code></li>
 </ol>
-<p>则：DP(i, j) = DP(i - 1, j) + DP(i - 1, j - nums[i])</p>
+<p>则：<code>DP(i, j) = DP(i - 1, j) + DP(i - 1, j - nums[i])</code></p>
 </li>
 </ol>
 <p>综上得状态转移方程：</p>
-<p>DP(i, j) =  DP(i - 1, j) + DP(i - 1, j - nums[i])    , j &gt;= nums[i]<br>                DP(i - 1, j)                                          , j &lt; nums[i]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) =  DP(i - 1, j) + DP(i - 1, j - nums[i])	, j &gt;= nums[i]</span><br><span class="line">			DP(i - 1, j)						    , j &lt; nums[i]</span><br></pre></td></tr></table></figure>
+
 <p>代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 0494 目标和</span><br><span class="line"># @Level    : medium</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/target-sum/</span><br><span class="line"># @Date     : 2021-06-07</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def findTargetSumWays(self, nums: List[int], target: int) -&gt; int:</span><br><span class="line">        sum_nums = 0</span><br><span class="line">        len_nums = len(nums)</span><br><span class="line">        for n in nums:</span><br><span class="line">            sum_nums += n</span><br><span class="line">        if (target + sum_nums) % 2 != 0:</span><br><span class="line">            return 0</span><br><span class="line">        sum_positive = (target + sum_nums) // 2</span><br><span class="line">        # dp(i, j) --&gt; 取前i个数，和为j的个数</span><br><span class="line">        memo = [[0 for j in range(0, sum_positive + 1)] for i in range(0, len_nums + 1)]</span><br><span class="line">        memo[0][0] = 1</span><br><span class="line">        for i in range(1, len_nums + 1):</span><br><span class="line">            for j in range(0, sum_positive + 1):</span><br><span class="line">                memo[i][j] = memo[i - 1][j]</span><br><span class="line">                if j &gt;= nums[i - 1]:</span><br><span class="line">                    memo[i][j] += memo[i - 1][j - nums[i - 1]]</span><br><span class="line">        return memo[len_nums][sum_positive]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">nums = [1]</span><br><span class="line">target = 2</span><br><span class="line">print(S.findTargetSumWays(nums, target))</span><br></pre></td></tr></table></figure>
 
