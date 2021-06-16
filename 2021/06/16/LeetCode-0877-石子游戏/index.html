@@ -22,36 +22,32 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;lalalashenle.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;width&quot;:240,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script><script src="/js/config.js"></script>
-<meta name="description" content="打开靶机网站，出现的是白茫茫的一片。  查看网页源代码，也没有看到任何hints。 利用dirsearch.py扫描一下网站目录：  题目”我有一个数据库”实际也暗示存在”phpmyadmin”目录了。输入地址跳转后，得到一些信息：  phpMyAdmin版本为4.8.1，存在远程文件包含漏洞，代码审计如下： 123456789101112public static $goto_whitelis">
+<meta name="description" content="非常经典又比较简单的一个博弈论问题。两名玩家每轮从一行石子中取出头或尾部石子，不会破坏数组的连续性，可以考虑在遍历对玩家获得分数进行实时更新。 进一步的，我们可以假设石子序列为ABC，则石子抓取情况有二，即：  亚历克斯先手抓取A石子，而后李抓取BC序列中的最佳抓取选项 亚历克斯先手抓取C石子，而后李抓取AB序列中的最佳抓取选项  容易看出，对于两种情况，先手的亚历克斯所得到的分数分别为： 12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CTF-CWCTF 2019-我有一个数据库-题解">
-<meta property="og:url" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:title" content="LeetCode-0877 石子游戏">
+<meta property="og:url" content="https://lalalashenle.github.io/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/index.html">
 <meta property="og:site_name" content="Skwang&#39;s Blog">
-<meta property="og:description" content="打开靶机网站，出现的是白茫茫的一片。  查看网页源代码，也没有看到任何hints。 利用dirsearch.py扫描一下网站目录：  题目”我有一个数据库”实际也暗示存在”phpmyadmin”目录了。输入地址跳转后，得到一些信息：  phpMyAdmin版本为4.8.1，存在远程文件包含漏洞，代码审计如下： 123456789101112public static $goto_whitelis">
+<meta property="og:description" content="非常经典又比较简单的一个博弈论问题。两名玩家每轮从一行石子中取出头或尾部石子，不会破坏数组的连续性，可以考虑在遍历对玩家获得分数进行实时更新。 进一步的，我们可以假设石子序列为ABC，则石子抓取情况有二，即：  亚历克斯先手抓取A石子，而后李抓取BC序列中的最佳抓取选项 亚历克斯先手抓取C石子，而后李抓取AB序列中的最佳抓取选项  容易看出，对于两种情况，先手的亚历克斯所得到的分数分别为： 12">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/1.png">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/5.png">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/2.png">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/3.png">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/6.jpg">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/4.png">
-<meta property="article:published_time" content="2021-06-08T14:59:43.000Z">
-<meta property="article:modified_time" content="2021-06-13T08:43:29.845Z">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/1.jpg">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/2.jpg">
+<meta property="article:published_time" content="2021-06-16T04:07:16.000Z">
+<meta property="article:modified_time" content="2021-06-16T07:06:48.456Z">
 <meta property="article:author" content="skwnag">
-<meta property="article:tag" content="CTF">
 <meta property="article:tag" content="题解">
+<meta property="article:tag" content="LeetCode">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/1.png">
+<meta name="twitter:image" content="https://lalalashenle.github.io/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/1.jpg">
 
 
-<link rel="canonical" href="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/">
+<link rel="canonical" href="https://lalalashenle.github.io/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;06&#x2F;08&#x2F;CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;08&#x2F;CTF-CWCTF-2019-我有一个数据库&#x2F;&quot;,&quot;title&quot;:&quot;CTF-CWCTF 2019-我有一个数据库-题解&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;06&#x2F;16&#x2F;LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;16&#x2F;LeetCode-0877-石子游戏&#x2F;&quot;,&quot;title&quot;:&quot;LeetCode-0877 石子游戏&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>CTF-CWCTF 2019-我有一个数据库-题解 | Skwang's Blog</title>
+<title>LeetCode-0877 石子游戏 | Skwang's Blog</title>
   
 
 
@@ -197,7 +193,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/">
+    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/skwang.jpg">
@@ -210,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CTF-CWCTF 2019-我有一个数据库-题解
+          LeetCode-0877 石子游戏
         </h1>
 
         <div class="post-meta-container">
@@ -220,23 +216,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-06-08 22:59:43" itemprop="dateCreated datePublished" datetime="2021-06-08T22:59:43+08:00">2021-06-08</time>
+      <time title="Created: 2021-06-16 12:07:16 / Modified: 15:06:48" itemprop="dateCreated datePublished" datetime="2021-06-16T12:07:16+08:00">2021-06-16</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-13 16:43:29" itemprop="dateModified" datetime="2021-06-13T16:43:29+08:00">2021-06-13</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CTF%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">CTF题解</span></a>
+          <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">LeetCode题解</span></a>
         </span>
     </span>
 
@@ -250,27 +240,36 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/1.png"></p>
-<p>打开靶机网站，出现的是白茫茫的一片。</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/5.png"></p>
-<p>查看网页源代码，也没有看到任何hints。</p>
-<p>利用dirsearch.py扫描一下网站目录：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/2.png"></p>
-<p>题目”我有一个数据库”实际也暗示存在”phpmyadmin”目录了。输入地址跳转后，得到一些信息：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/3.png"></p>
-<p>phpMyAdmin版本为4.8.1，存在远程文件包含漏洞，代码审计如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static $goto_whitelist = array(</span><br><span class="line">	&#x27;db_datadict.php&#x27;,</span><br><span class="line">	&#x27;db_sql.php&#x27;,</span><br><span class="line">    &#x27;db_events.php&#x27;,</span><br><span class="line">    &#x27;db_export.php&#x27;,</span><br><span class="line">    &#x27;db_importdocsql.php&#x27;,</span><br><span class="line">    &#x27;db_multi_table_query.php&#x27;,</span><br><span class="line">    &#x27;db_structure.php&#x27;,</span><br><span class="line">    &#x27;db_import.php&#x27;,</span><br><span class="line">    	...</span><br><span class="line">    	...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+        <p><img src="/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/1.jpg"></p>
+<p>非常经典又比较简单的一个博弈论问题。两名玩家每轮从一行石子中取出头或尾部石子，不会破坏数组的连续性，可以考虑在遍历对玩家获得分数进行实时更新。</p>
+<p>进一步的，我们可以假设石子序列为<code>ABC</code>，则石子抓取情况有二，即：</p>
+<ol>
+<li>亚历克斯先手抓取<code>A</code>石子，而后李抓取<code>BC</code>序列中的最佳抓取选项</li>
+<li>亚历克斯先手抓取<code>C</code>石子，而后李抓取<code>AB</code>序列中的最佳抓取选项</li>
+</ol>
+<p>容易看出，对于两种情况，先手的亚历克斯所得到的分数分别为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@solution1: point[A] - point[BC最佳得分]</span><br><span class="line">@solution2: point[C] - point[AB最佳得分]</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$_page = urldecode($page);</span><br><span class="line">$_page = mb_substr(</span><br><span class="line">    $_page,</span><br><span class="line">    0,</span><br><span class="line">    mb_strpos($_page . &#x27;?&#x27;, &#x27;?&#x27;)</span><br><span class="line">);</span><br><span class="line">if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return false;</span><br></pre></td></tr></table></figure>
+<p>显然这是一对可进行一般化的状态公式。</p>
+<p>我们构造一个DP数组，<code>DP(i, j)</code>意为当取石子序列中的第<code>i</code>到第<code>j</code>个时，亚历克斯的净分数。显然当<code>i</code>等于<code>j</code>时，意为先手的亚历克斯可以获得此唯一石子的全部分数，故初始化为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) = piles[i], i == j时</span><br></pre></td></tr></table></figure>
 
-<p>可以看出，若’?’前的page在白名单中，则return true。可通过双重编码进行相应绕过，payload如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?target=db_datadict.php%253f+(&quot;文件包含路径&quot;)</span><br></pre></td></tr></table></figure>
+<p>当<code>i</code>大于<code>j</code>时，则</p>
+<ol>
+<li>亚历克斯先手可取位于<code>i</code>处的<code>piles[i]</code>，而李取出剩余<code>(i + 1, j)</code>处的最佳分数，二者之差为亚历克斯的净得分；</li>
+</ol>
+<p>或者：</p>
+<ol start="2">
+<li>亚历克斯先手可取位于<code>j</code>处的<code>piles[j]</code>，而李取出剩余<code>(i, j - 1)</code>处的最佳分数，二者之差为亚历克斯的净得分；</li>
+</ol>
+<p>状态转移方程为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) = MAX(piles[i] - DP(i + 1, j), piles[j] - DP(i, j - 1))</span><br></pre></td></tr></table></figure>
 
-<p>“%253f”第一次解码为”%3f”，第二次解码为”?”，此时构造的payload已经顺利通过$_page的检查方法。而第一次解码得到的”%3f”会上传至index.php的”$_REQUEST[‘target’]”中，可以进行文件包含操作。</p>
-<p>读取/etc/passwd，测试是否可以顺利执行文件包含：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/6.jpg"></p>
-<p>测试成功，读取”/flag”即可得到flag。</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/4.png"></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Title    : 0877 石子游戏</span></span><br><span class="line"><span class="comment"># @Level    : medium</span></span><br><span class="line"><span class="comment"># @Address  : https://leetcode-cn.com/problems/stone-game/</span></span><br><span class="line"><span class="comment"># @Date     : 2021-06-16</span></span><br><span class="line"><span class="comment"># @Author   : lalalashenle</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">stoneGame</span>(<span class="params">self, piles: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        len_p = <span class="built_in">len</span>(piles)</span><br><span class="line">        memo = [[<span class="number">0</span>] * len_p <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, len_p)]</span><br><span class="line">        <span class="keyword">for</span> i, p <span class="keyword">in</span> <span class="built_in">enumerate</span>(piles):</span><br><span class="line">            memo[i][i] = p</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len_p - <span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i + <span class="number">1</span>, len_p):</span><br><span class="line">                memo[i][j] = <span class="built_in">max</span>(piles[j] - memo[i][j - <span class="number">1</span>], piles[i] - memo[i + <span class="number">1</span>][j])</span><br><span class="line">        <span class="keyword">return</span> memo[<span class="number">0</span>][len_p - <span class="number">1</span>] &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">piles = [<span class="number">3</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(S.stoneGame(piles))  <span class="comment"># true</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/2.jpg"></p>
 <p align="right"><strong>致谢：小鹿同学</strong></p>
     </div>
 
@@ -280,22 +279,19 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CTF/" rel="tag"># CTF</a>
               <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/" rel="prev" title="LeetCode-1049 Last Stone Weight-II-题解">
-                  <i class="fa fa-chevron-left"></i> LeetCode-1049 Last Stone Weight-II-题解
+                <a href="/2021/06/13/CTF-%E7%BD%91%E9%BC%8E%E6%9D%AF2020-AreUSerialz/" rel="prev" title="CTF-网鼎杯2020-AreUSerialz-题解">
+                  <i class="fa fa-chevron-left"></i> CTF-网鼎杯2020-AreUSerialz-题解
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/06/09/LeetCode-0879-Profitable-Schemes/" rel="next" title="LeetCode-0879 Profitable Schemes-题解">
-                  LeetCode-0879 Profitable Schemes-题解 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
