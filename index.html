@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -176,6 +176,116 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/skwang.jpg">
+      <meta itemprop="name" content="skwang">
+      <meta itemprop="description" content="暨南大学 · 网络空间安全">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skwang's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/" class="post-title-link" itemprop="url">LeetCode-0065 有效数字</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-18 15:36:45 / Modified: 16:17:43" itemprop="dateCreated datePublished" datetime="2021-06-18T15:36:45+08:00">2021-06-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">LeetCode题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/1.jpg"></p>
+<p>一道<code>DFA（确定有限自动机）</code>问题。</p>
+<p><code>DFA</code>是一个很强大的算法，它可以有穷模拟状态之间的转移，典型工程应用包括正则表达式、KMP算法等。在<code>DFA</code>中，我们需要一个<code>初始状态</code>，象征状态起点，以及<code>终止状态</code>，象征状态的合理重点。在本题中，两种特殊状态的定义如下：</p>
+<ol>
+<li><p>初始状态：</p>
+<p>对字符串从头至尾进行遍历，遍历前的最开始的状态即为初始状态。</p>
+</li>
+<li><p>终止状态：</p>
+<p>所有满足题意的<code>有效数字</code>状态均可作为终止状态。</p>
+</li>
+</ol>
+<p>首先我们分析一下此题有哪些状态：</p>
+<ol>
+<li>空格或字符串开始（初始状态） <code>blank</code></li>
+<li>正或负数符号位 <code>sign</code></li>
+<li>数字 <code>digit</code></li>
+<li>小数点 <code>dot</code></li>
+<li>小数点后的数字 <code>digit</code></li>
+<li>科学技术法指数 <code>e</code></li>
+<li>指数e后面的正或负数符号位 <code>sign</code></li>
+<li>指数后的数字 <code>digit</code></li>
+<li>空格或字符串结束 <code>blank</code></li>
+</ol>
+<p>对于一个有效数字，我们可以使用<code>&#123;3, 5, 8, 9&#125;</code>作为结束状态，分别对应的例子如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3:	&quot;-123&quot;</span><br><span class="line">5:	&quot;+.2223&quot;</span><br><span class="line">8:	&quot;2.33E-6&quot;</span><br><span class="line">9:	&quot;12.3e6  &quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/3.png"></p>
+<p>图片来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-number/discuss/23728/A-simple-solution-in-Python-based-on-DFA">A simple solution in Python based on DFA</a></p>
+<p>编程部分只要对每个状态进行模拟就可以了，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Title    : 0065 有效数字</span></span><br><span class="line"><span class="comment"># @Level    : hard</span></span><br><span class="line"><span class="comment"># @Address  : https://leetcode-cn.com/problems/valid-number/</span></span><br><span class="line"><span class="comment"># @Date     : 2021-06-17</span></span><br><span class="line"><span class="comment"># @Author   : lalalashenle</span></span><br><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isNumber</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="comment"># 状态：</span></span><br><span class="line">        <span class="comment"># 初始空, 符号位, 数字, 小数点, 小数数字, 指数符号e, e后的符号, e后的数字, 结束</span></span><br><span class="line">        state = [</span><br><span class="line">            <span class="comment"># index优化</span></span><br><span class="line">            &#123;&#125;,</span><br><span class="line">            <span class="comment"># state 1</span></span><br><span class="line">            &#123;<span class="string">&quot;blank&quot;</span>: <span class="number">1</span>, <span class="string">&quot;sign&quot;</span>: <span class="number">2</span>, <span class="string">&quot;digit&quot;</span>: <span class="number">3</span>, <span class="string">&quot;dot&quot;</span>: <span class="number">4</span>&#125;,</span><br><span class="line">            <span class="comment"># state 2</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">3</span>, <span class="string">&quot;dot&quot;</span>: <span class="number">4</span>&#125;,</span><br><span class="line">            <span class="comment"># state 3</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">3</span>, <span class="string">&quot;dot&quot;</span>: <span class="number">5</span>, <span class="string">&quot;E&quot;</span>: <span class="number">6</span>, <span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;,</span><br><span class="line">            <span class="comment"># state 4</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">5</span>&#125;,</span><br><span class="line">            <span class="comment"># state 5</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">5</span>, <span class="string">&quot;E&quot;</span>: <span class="number">6</span>, <span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;,</span><br><span class="line">            <span class="comment"># state 6</span></span><br><span class="line">            &#123;<span class="string">&quot;sign&quot;</span>: <span class="number">7</span>, <span class="string">&quot;digit&quot;</span>: <span class="number">8</span>&#125;,</span><br><span class="line">            <span class="comment"># state 7</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">8</span>&#125;,</span><br><span class="line">            <span class="comment"># state 8</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">8</span>, <span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;,</span><br><span class="line">            <span class="comment"># state 9</span></span><br><span class="line">            &#123;<span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;</span><br><span class="line">        ]</span><br><span class="line">		</span><br><span class="line">        <span class="comment"># 判断字符对应状态</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">stateDicide</span>(<span class="params">s</span>):</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;0&#x27;</span> &lt;= s &lt;= <span class="string">&#x27;9&#x27;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;digit&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s <span class="keyword">in</span> <span class="string">&#x27;eE&#x27;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;E&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s <span class="keyword">in</span> <span class="string">&quot;+-&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;sign&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s == <span class="string">&quot;.&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;dot&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s == <span class="string">&quot; &quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;blank&quot;</span></span><br><span class="line"></span><br><span class="line">        state_index = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> ss <span class="keyword">in</span> s:</span><br><span class="line">            ss_state = stateDicide(ss)</span><br><span class="line">            <span class="keyword">if</span> ss_state <span class="keyword">not</span> <span class="keyword">in</span> state[state_index]:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            state_index = state[state_index][ss_state]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> state_index <span class="keyword">in</span> &#123;<span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">s = <span class="string">&quot;+6e-1&quot;</span></span><br><span class="line"><span class="built_in">print</span>(S.isNumber(s))</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/2.jpg"></p>
+<p>这道题也可以使用正则表达式解题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isNumber = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> reg = <span class="regexp">/^[+-]?((\d+(\.\d+)?)|(\d*\.?\d+)|(\d+\.?\d*))(e[+-]?\d+)?$/i</span></span><br><span class="line">    <span class="keyword">return</span> reg.test(s.trim());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/4.jpg"></p>
+<p align="right"><strong>致谢：小鹿同学</strong></p>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
