@@ -134,18 +134,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -176,6 +176,106 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/skwang.jpg">
+      <meta itemprop="name" content="skwang">
+      <meta itemprop="description" content="网安学习ing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Skwang's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-title-link" itemprop="url">CTF-CWCTF 2019-我有一个数据库-题解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-08 22:59:43" itemprop="dateCreated datePublished" datetime="2021-06-08T22:59:43+08:00">2021-06-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-13 16:43:29" itemprop="dateModified" datetime="2021-06-13T16:43:29+08:00">2021-06-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CTF%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">CTF题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/1.png"></p>
+<p>打开靶机网站，出现的是白茫茫的一片。</p>
+<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/5.png"></p>
+<p>查看网页源代码，也没有看到任何hints。</p>
+<p>利用dirsearch.py扫描一下网站目录：</p>
+<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/2.png"></p>
+<p>题目”我有一个数据库”实际也暗示存在”phpmyadmin”目录了。输入地址跳转后，得到一些信息：</p>
+<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/3.png"></p>
+<p>phpMyAdmin版本为4.8.1，存在远程文件包含漏洞，代码审计如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static $goto_whitelist = array(</span><br><span class="line">	&#x27;db_datadict.php&#x27;,</span><br><span class="line">	&#x27;db_sql.php&#x27;,</span><br><span class="line">    &#x27;db_events.php&#x27;,</span><br><span class="line">    &#x27;db_export.php&#x27;,</span><br><span class="line">    &#x27;db_importdocsql.php&#x27;,</span><br><span class="line">    &#x27;db_multi_table_query.php&#x27;,</span><br><span class="line">    &#x27;db_structure.php&#x27;,</span><br><span class="line">    &#x27;db_import.php&#x27;,</span><br><span class="line">    	...</span><br><span class="line">    	...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$_page = urldecode($page);</span><br><span class="line">$_page = mb_substr(</span><br><span class="line">    $_page,</span><br><span class="line">    0,</span><br><span class="line">    mb_strpos($_page . &#x27;?&#x27;, &#x27;?&#x27;)</span><br><span class="line">);</span><br><span class="line">if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return false;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，若’?’前的page在白名单中，则return true。可通过双重编码进行相应绕过，payload如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?target=db_datadict.php%253f+(&quot;文件包含路径&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>“%253f”第一次解码为”%3f”，第二次解码为”?”，此时构造的payload已经顺利通过$_page的检查方法。而第一次解码得到的”%3f”会上传至index.php的”$_REQUEST[‘target’]”中，可以进行文件包含操作。</p>
+<p>读取/etc/passwd，测试是否可以顺利执行文件包含：</p>
+<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/6.jpg"></p>
+<p>测试成功，读取”/flag”即可得到flag。</p>
+<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/4.png"></p>
+<p align="right"><strong>致谢：小鹿同学</strong></p>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
