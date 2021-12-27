@@ -254,20 +254,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j, k) = DP(i - 1, j - group[i], k - profit[i])</span><br></pre></td></tr></table></figure>
 
 <p>需要注意一点，因为<code>minProfit</code>的含义是利润<strong>至少</strong>为多少，故<code>k - profit[i]</code>的值至少为0，方便起见，将状态转移方程优化为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j, k) = DP(i - 1, j - group[i], MAX(0, k - profit[i]))</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/09/LeetCode-0879-Profitable-Schemes/1.jpg"></p>
-<p>代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 0879 Profitable Schemes</span><br><span class="line"># @Level    : hard</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/profitable-schemes/</span><br><span class="line"># @Date     : 2021-06-09</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def profitableSchemes(self, n: int, minProfit: int, group: List[int], profit: List[int]) -&gt; int:</span><br><span class="line">        mod = 10**9 + 7</span><br><span class="line">        len_p = len(profit) + 1</span><br><span class="line">        memo = [[[0 for _ in range(0, minProfit + 1)] for _ in range(0, n + 1)] for _ in range(0, len_p)]</span><br><span class="line">        for j in range(0, n + 1):</span><br><span class="line">            memo[0][j][0] = 1</span><br><span class="line">        for i in range(1, len_p):</span><br><span class="line">            for j in range(0, n + 1):</span><br><span class="line">                for k in range(0, minProfit + 1):</span><br><span class="line">                    memo[i][j][k] = memo[i - 1][j][k]</span><br><span class="line">                    if j &gt;= group[i - 1]:</span><br><span class="line">                        memo[i][j][k] += (memo[i - 1][j - group[i - 1]][max(0, k - profit[i - 1])])</span><br><span class="line"></span><br><span class="line">        return memo[len_p - 1][n][minProfit] % mod</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">n = 5</span><br><span class="line">minProfit = 3</span><br><span class="line">group = [2, 2]</span><br><span class="line">profit = [2, 3]</span><br><span class="line">print(S.profitableSchemes(n, minProfit, group, profit))</span><br></pre></td></tr></table></figure>
-
-<p>由于<code>DP(i, j, k)</code>只和<code>DP(i - 1)</code>有关，故可利用滚动数组在行二维数组空间代码优化，核心代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for i in range(1, len_p):</span><br><span class="line">	for j in range(n, 0, -1):</span><br><span class="line">		for k in range(0, minProfit + 1):</span><br><span class="line">            if j &gt;= group[i - 1]:</span><br><span class="line">            	pro = max(0, k - profit[i - 1])</span><br><span class="line">            	memo[j][k] += memo[j - group[i - 1]][pro]</span><br></pre></td></tr></table></figure>
-
-
-
-<p align="right"><strong>致谢：小鹿同学</strong></p>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/09/LeetCode-0879-Profitable-Schemes/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -356,18 +350,14 @@
 <p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/3.png"></p>
 <p>phpMyAdmin版本为4.8.1，存在远程文件包含漏洞，代码审计如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static $goto_whitelist = array(</span><br><span class="line">	&#x27;db_datadict.php&#x27;,</span><br><span class="line">	&#x27;db_sql.php&#x27;,</span><br><span class="line">    &#x27;db_events.php&#x27;,</span><br><span class="line">    &#x27;db_export.php&#x27;,</span><br><span class="line">    &#x27;db_importdocsql.php&#x27;,</span><br><span class="line">    &#x27;db_multi_table_query.php&#x27;,</span><br><span class="line">    &#x27;db_structure.php&#x27;,</span><br><span class="line">    &#x27;db_import.php&#x27;,</span><br><span class="line">    	...</span><br><span class="line">    	...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$_page = urldecode($page);</span><br><span class="line">$_page = mb_substr(</span><br><span class="line">    $_page,</span><br><span class="line">    0,</span><br><span class="line">    mb_strpos($_page . &#x27;?&#x27;, &#x27;?&#x27;)</span><br><span class="line">);</span><br><span class="line">if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return false;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出，若’?’前的page在白名单中，则return true。可通过双重编码进行相应绕过，payload如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?target=db_datadict.php%253f+(&quot;文件包含路径&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>“%253f”第一次解码为”%3f”，第二次解码为”?”，此时构造的payload已经顺利通过$_page的检查方法。而第一次解码得到的”%3f”会上传至index.php的”$_REQUEST[‘target’]”中，可以进行文件包含操作。</p>
-<p>读取/etc/passwd，测试是否可以顺利执行文件包含：</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/6.jpg"></p>
-<p>测试成功，读取”/flag”即可得到flag。</p>
-<p><img src="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/4.png"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/08/CTF-CWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -457,10 +447,14 @@
 <p>对了，前面提到此题为”带放回操作”的背包问题，那么放回操作是否会对上述构造的状态转移方程产生影响呢？假设有A、B、C三个石子，取A、B两石子碰撞，得 A - B，将 A - B 放回。再取 A - B 与 C两石子碰撞，可得 C - (A - B)，即：C - A + B，相当于取B、C为正数集，A为负数集（注意，只举了一个简单例子，为标明A、B、C大小，有心的朋友可以加入大小的假设再演算一遍，会发现结果是相同的）。故可以发现，”放回操作”实际上并不影响此题对0-1背包的转化，但也确实增加一点题目的思考难度了。</p>
 <p><img src="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/result.png"></p>
 <p>代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 1049 最后一块石头的重量-II</span><br><span class="line"># @Level    : medium</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/last-stone-weight-ii/</span><br><span class="line"># @Date     : 2021-06-08</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def lastStoneWeightII(self, stones: List[int]) -&gt; int:</span><br><span class="line">        sum_s = 0</span><br><span class="line">        len_s = len(stones)</span><br><span class="line">        for s in stones:</span><br><span class="line">            sum_s += s</span><br><span class="line">        memo = [[0 for _ in range(0, sum_s // 2 + 1)] for _ in range(0, len_s + 1)]</span><br><span class="line">        for i in range(1, len_s + 1):</span><br><span class="line">            for j in range(0, sum_s // 2 + 1):</span><br><span class="line">                memo[i][j] = memo[i - 1][j]</span><br><span class="line">                if j &gt;= stones[i - 1]:</span><br><span class="line">                    memo[i][j] = max(memo[i][j], memo[i - 1][j - stones[i - 1]] + stones[i - 1])</span><br><span class="line">        return sum_s - 2 * memo[len_s][sum_s // 2]</span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">stones = [22, 1, 6, 64, 12, 68, 15]     # 2</span><br><span class="line">print(S.lastStoneWeightII(stones))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>当然，既然是0-1背包问题，我们就可以对二维DP数组进行”滚动数组”、”一维空间优化”等优化操作，日后再开贴讨论背包问题的几个优化策略吧 ：）</p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/08/LeetCode-1049-Last-Stone-Weight-II/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -549,31 +543,14 @@
 <p>至此，可发现此题实际为<strong>0-1背包问题</strong>，设计DP数组，DP(i, j)代表取前i个数，当和为j时的最大个数。</p>
 <p>边界为：<code>DP(0, 0) = 1</code>，因为取0个数时，只能得到和为0一种结果。同时也可得：<code>DP(0, j) = 0</code></p>
 <p>状态转移方程：</p>
-<p>取和(即j)时，考虑两种情况：</p>
-<ol>
-<li><p><code>j</code>小于当前可取的数(nums[i])，此时：<code>DP(i, j) = DP(i - 1, j)</code></p>
-</li>
-<li><p><code>j</code>大于等于当前可取的数(nums[i])，此时：</p>
-<ol>
-<li>不选择加入nums[i]，则：<code>DP(i, j) = DP(i - 1, j)</code></li>
-<li>选择加入nums[i]，则：<code>DP(i, j) = DP(i - 1, j - nums[i])</code></li>
-</ol>
-<p>则：<code>DP(i, j) = DP(i - 1, j) + DP(i - 1, j - nums[i])</code></p>
-</li>
-</ol>
-<p>综上得状态转移方程：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) =  DP(i - 1, j) + DP(i - 1, j - nums[i])	, j &gt;= nums[i]</span><br><span class="line">			DP(i - 1, j)						    , j &lt; nums[i]</span><br></pre></td></tr></table></figure>
-
-<p>代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># @Title    : 0494 目标和</span><br><span class="line"># @Level    : medium</span><br><span class="line"># @Address  : https://leetcode-cn.com/problems/target-sum/</span><br><span class="line"># @Date     : 2021-06-07</span><br><span class="line"># @Author   : lalalashenle</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def findTargetSumWays(self, nums: List[int], target: int) -&gt; int:</span><br><span class="line">        sum_nums = 0</span><br><span class="line">        len_nums = len(nums)</span><br><span class="line">        for n in nums:</span><br><span class="line">            sum_nums += n</span><br><span class="line">        if (target + sum_nums) % 2 != 0:</span><br><span class="line">            return 0</span><br><span class="line">        sum_positive = (target + sum_nums) // 2</span><br><span class="line">        # dp(i, j) --&gt; 取前i个数，和为j的个数</span><br><span class="line">        memo = [[0 for j in range(0, sum_positive + 1)] for i in range(0, len_nums + 1)]</span><br><span class="line">        memo[0][0] = 1</span><br><span class="line">        for i in range(1, len_nums + 1):</span><br><span class="line">            for j in range(0, sum_positive + 1):</span><br><span class="line">                memo[i][j] = memo[i - 1][j]</span><br><span class="line">                if j &gt;= nums[i - 1]:</span><br><span class="line">                    memo[i][j] += memo[i - 1][j - nums[i - 1]]</span><br><span class="line">        return memo[len_nums][sum_positive]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">nums = [1]</span><br><span class="line">target = 2</span><br><span class="line">print(S.findTargetSumWays(nums, target))</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/07/LeetCode-0494-Target-Sum/result.png" alt="图裂了吗？"></p>
-<p>提交时发现了自己一年前的提交代码，现在已经有点看不懂了哈哈 : )</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findTargetSumWays(vector&lt;int&gt;&amp; nums, int S) &#123;</span><br><span class="line">    	if(S &gt; 1000 || S &lt; -1000)</span><br><span class="line">    		return 0;</span><br><span class="line">		int n = nums.size();</span><br><span class="line">		vector&lt;vector&lt;int&gt; &gt; memo(n, vector&lt;int&gt;(2001, 0)); // 和的取值范围：[-1000, 1000] </span><br><span class="line">		memo[0][nums[0] + 1000] = 1;</span><br><span class="line">		memo[0][-nums[0] + 1000] += 1;</span><br><span class="line">		for(int i = 1; i &lt; n; i++) &#123;</span><br><span class="line">			for(int j = 0; j &lt; 2001; j++) &#123;</span><br><span class="line">				if(j + nums[i] &gt;= 0 &amp;&amp; j + nums[i] &lt; 2001)</span><br><span class="line">					memo[i][j] += memo[i - 1][j + nums[i]];</span><br><span class="line">				if(j - nums[i] &gt;= 0 &amp;&amp; j - nums[i] &lt; 2001)</span><br><span class="line">					memo[i][j] += memo[i - 1][j - nums[i]];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		return memo[n - 1][S + 1000];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/07/LeetCode-0494-Target-Sum/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

