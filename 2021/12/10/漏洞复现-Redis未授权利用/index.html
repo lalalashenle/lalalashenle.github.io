@@ -22,32 +22,35 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;lalalashenle.github.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;width&quot;:240,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script><script src="/js/config.js"></script>
+<meta name="description" content="redis若授权访问配置不当，则可能会引发敏感信息泄露、ssh免密登录、主从复制RCE等一系列风险">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode-0518 Coin Change 2-题解">
-<meta property="og:url" content="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/index.html">
+<meta property="og:title" content="漏洞复现-Redis未授权利用">
+<meta property="og:url" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/index.html">
 <meta property="og:site_name" content="lalalashenle&#39;s Blog">
+<meta property="og:description" content="redis若授权访问配置不当，则可能会引发敏感信息泄露、ssh免密登录、主从复制RCE等一系列风险">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/3.jpg">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/2.jpg">
-<meta property="og:image" content="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/1.jpg">
-<meta property="article:published_time" content="2021-06-10T14:21:17.000Z">
-<meta property="article:modified_time" content="2021-12-27T03:21:06.925Z">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/1.jpg">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/2.jpg">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/3.jpg">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/4.jpg">
+<meta property="og:image" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/5.jpg">
+<meta property="article:published_time" content="2021-12-10T11:02:59.000Z">
+<meta property="article:modified_time" content="2022-01-04T02:30:57.550Z">
 <meta property="article:author" content="lalalashenle">
-<meta property="article:tag" content="题解">
-<meta property="article:tag" content="LeetCode">
-<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="漏洞">
+<meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/3.jpg">
+<meta name="twitter:image" content="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/1.jpg">
 
 
-<link rel="canonical" href="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/">
+<link rel="canonical" href="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;06&#x2F;10&#x2F;LeetCode-0518-Coin-Change-2&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;10&#x2F;LeetCode-0518-Coin-Change-2&#x2F;&quot;,&quot;title&quot;:&quot;LeetCode-0518 Coin Change 2-题解&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;lalalashenle.github.io&#x2F;2021&#x2F;12&#x2F;10&#x2F;%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;12&#x2F;10&#x2F;漏洞复现-Redis未授权利用&#x2F;&quot;,&quot;title&quot;:&quot;漏洞复现-Redis未授权利用&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>LeetCode-0518 Coin Change 2-题解 | lalalashenle's Blog</title>
+<title>漏洞复现-Redis未授权利用 | lalalashenle's Blog</title>
   
 
 
@@ -114,7 +117,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -127,6 +130,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">0x00 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">0x01 漏洞概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-%E5%BD%B1%E5%93%8D%E7%89%88%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">0x02 影响版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">0x03 环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">0x04 漏洞复现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-%E4%BF%AE%E5%A4%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">0x05 修复方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">参考链接：</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +197,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/06/10/LeetCode-0518-Coin-Change-2/">
+    <link itemprop="mainEntityOfPage" href="https://lalalashenle.github.io/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/skwang.jpg">
@@ -206,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LeetCode-0518 Coin Change 2-题解
+          漏洞复现-Redis未授权利用
         </h1>
 
         <div class="post-meta-container">
@@ -217,14 +221,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-06-10 22:21:17" itemprop="dateCreated datePublished" datetime="2021-06-10T22:21:17+08:00">2021-06-10</time>
+      <time title="Created: 2021-12-10 19:02:59" itemprop="dateCreated datePublished" datetime="2021-12-10T19:02:59+08:00">2021-12-10</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-27 11:21:06" itemprop="dateModified" datetime="2021-12-27T11:21:06+08:00">2021-12-27</time>
+        <time title="Modified: 2022-01-04 10:30:57" itemprop="dateModified" datetime="2022-01-04T10:30:57+08:00">2022-01-04</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -232,13 +236,14 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">LeetCode题解</span></a>
+          <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">漏洞复现</span></a>
         </span>
     </span>
 
   
 </div>
 
+            <div class="post-description">redis若授权访问配置不当，则可能会引发敏感信息泄露、ssh免密登录、主从复制RCE等一系列风险</div>
         </div>
       </header>
 
@@ -246,20 +251,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="/2021/06/10/LeetCode-0518-Coin-Change-2/3.jpg"></p>
-<p>此题可转化为完全背包问题，<code>amount</code>相当于背包容积，<code>coins</code>相当于物品体积，同时<code>coins</code>可无限制数量地提取。</p>
-<p>朴素解法：设计DP数组，<code>DP(i, j)</code>含义为取前i个<code>coins</code>，<code>amount</code>为j时地组合数量，则状态转移方程为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># j - k * coins[i] &gt;= 0, k为正整数</span><br><span class="line">DP(i, j) = DP(i - 1, j) + sum(DP(i - 1, j - k * coins[i]))</span><br></pre></td></tr></table></figure>
+        <h2 id="0x00-简介"><a href="#0x00-简介" class="headerlink" title="0x00 简介"></a>0x00 简介</h2><p> Redis是一款开源key-value型数据库。</p>
+<h2 id="0x01-漏洞概述"><a href="#0x01-漏洞概述" class="headerlink" title="0x01 漏洞概述"></a>0x01 漏洞概述</h2><p>Redis提供了redis-cli命令行工具，当redis授权形式配置不当时，恶意用户可能通过redis-cli远程接入redis数据库，并进行进一步的利用。</p>
+<h2 id="0x02-影响版本"><a href="#0x02-影响版本" class="headerlink" title="0x02 影响版本"></a>0x02 影响版本</h2><p>3.2版本后redis默认开启保护模式（protected-mode），但主要还是看授权配置是否得当</p>
+<h2 id="0x03-环境搭建"><a href="#0x03-环境搭建" class="headerlink" title="0x03 环境搭建"></a>0x03 环境搭建</h2><p> 使用vulhub开源漏洞靶场，用docker-compose起一个redis未授权环境，可以看到在攻击机上可以利用redis-cli远程接入未授权redis</p>
+<p><img src="/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/1.jpg"></p>
+<p>事实上，当恶意用户调用”info”命令时，就已经造成了敏感信息泄露了，甚至也可以调用”flushall”清楚数据库造成重大损失。进一步的，由于redis提供了动态配置修改功能，恶意用户可以通过修改备份工作目录和备份文件，完成许多漏洞利用操作。</p>
+<h2 id="0x04-漏洞复现"><a href="#0x04-漏洞复现" class="headerlink" title="0x04 漏洞复现"></a>0x04 漏洞复现</h2><p>如下图，在远程连接未授权redis的攻击机上，设置dir为<code>/data/</code>目录，设置dbfilename为<code>test</code>文件，当执行<code>save</code>命令后（注：该命令要求受害机的未授权redis是root权限下开启的），在受害机的<code>/data/</code>目录下也出现了<code>test</code>文件，并且文件内容为攻击机上设置的key-value字段。可见修改备份工作目录和备份文件，可以看到相关修改会映射到受害服务器上。</p>
+<p><img src="/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/2.jpg"></p>
+<p><img src="/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/3.jpg"></p>
+<p>根据这个方法，可以衍生地修改id_rsa文件实现SSH免密登录、修改crontab文件实现定时任务反弹shell、在web服务路径植入webshell文件等。</p>
+<p>前面提到，<code>save</code>命令需要root权限，如果受害服务器并不是用root权限起的redis服务，则可以通过”目录爆破”方法获取到服务器目录，造成敏感信息泄露。</p>
+<p><img src="/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/4.jpg"></p>
+<p>如上图，当<code>config set dir</code>的value设为一个不存在的，或者无权限访问的目录时，会出现对应的报错信息，反之则会返回<code>OK</code>，可以根据这个报错信息将服务器的目录进行爆破猜解。</p>
+<p>我们可以发现以上方法都是通过<code>写文件</code>的方式完成风险操作，这样的方式存在不足，仔细看这张图：</p>
+<p><img src="/2021/12/10/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Redis%E6%9C%AA%E6%8E%88%E6%9D%83%E5%88%A9%E7%94%A8/5.jpg"></p>
+<p>可以看到除了<code>hello world</code>（上传的webshell）外，文件中还有许多干扰数据，正因此，本文中介绍的几个利用例子都是具有一定容错性的<code>ssh免密、crontab、webshell</code>等。事实上，在Ubuntu中，crontab的利用方式就会利用失败，因为Ubuntu对crontab的语法、格式等要求较为严格。并且，现在的服务部署方式愈发地追求组件化、容器化，如docker模式就是这样。举个例子，一个redis服务容器中，往往只有单一的redis服务，不包含ssh、crontab等服务。在前述诸多限制的基础上，更何况写文件还会受到权限控制的限制。在此背景下，我为大家介绍另一种利用方式。</p>
+<p>2018年的zeronights会议上，Pavel Toporkov分享介绍了一种关于redis新版本的RCE利用方式，其利用手段更为通用，危害也更大</p>
+<p>mark，未完待续…….</p>
+<h2 id="0x05-修复方式"><a href="#0x05-修复方式" class="headerlink" title="0x05 修复方式"></a>0x05 修复方式</h2><p>做好授权相关的配置，如开启保护模式、设置访问口令、添加防火墙规则等。</p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/twosmi1e/p/13308682.html">Redis未授权总结-twosmi1e</a></p>
+<p><a target="_blank" rel="noopener" href="https://2018.zeronights.ru/wp-content/uploads/materials/15-redis-post-exploitation.pdf">15-redis-post-exploitation.pdf (zeronights.ru)</a></p>
 
-<p>无优化版本，提交后果断超时</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">change</span>(<span class="params">self, amount: <span class="built_in">int</span>, coins: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        len_c = <span class="built_in">len</span>(coins)</span><br><span class="line">        memo = [[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, amount + <span class="number">1</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, len_c + <span class="number">1</span>)]</span><br><span class="line">        memo[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, len_c + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, amount + <span class="number">1</span>):</span><br><span class="line">                ind = <span class="number">1</span></span><br><span class="line">                memo[i][j] = memo[i - <span class="number">1</span>][j]</span><br><span class="line">                <span class="keyword">while</span> j - ind * coins[i - <span class="number">1</span>] &gt;= <span class="number">0</span>:</span><br><span class="line">                    memo[i][j] += memo[i - <span class="number">1</span>][j - ind * coins[i - <span class="number">1</span>]]</span><br><span class="line">                    ind += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> memo[len_c][amount]</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/10/LeetCode-0518-Coin-Change-2/2.jpg"></p>
-<p>进行一维空间优化，将<code>DP(i - 1, j - k * coins[i])</code>换成<code>DP(j - coins[i])</code>，优化后代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">change</span>(<span class="params">self, amount: <span class="built_in">int</span>, coins: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        memo = [<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, amount + <span class="number">1</span>)]</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> coins:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(c, amount + <span class="number">1</span>):</span><br><span class="line">                memo[i] += memo[i - c]</span><br><span class="line">        <span class="keyword">return</span> memo[amount]</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/06/10/LeetCode-0518-Coin-Change-2/1.jpg"></p>
-<p align="right"><strong>致谢：小鹿同学</strong></p>
     </div>
 
     
@@ -268,22 +281,21 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
-              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
-              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+              <a href="/tags/%E6%BC%8F%E6%B4%9E/" rel="tag"># 漏洞</a>
+              <a href="/tags/redis/" rel="tag"># redis</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/06/09/LeetCode-0879-Profitable-Schemes/" rel="prev" title="LeetCode-0879 Profitable Schemes-题解">
-                  <i class="fa fa-chevron-left"></i> LeetCode-0879 Profitable Schemes-题解
+                <a href="/2021/12/03/CTF-JNU2021%E6%96%B0%E7%94%9F%E8%B5%9BWriteup/" rel="prev" title="CTF-JNU2021新生赛Writeup">
+                  <i class="fa fa-chevron-left"></i> CTF-JNU2021新生赛Writeup
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/06/11/LeetCode-0279-Perfect-Squares/" rel="next" title="LeetCode-0279 Perfect Squares-题解">
-                  LeetCode-0279 Perfect Squares-题解 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/12/21/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-Docker-remote-api%E6%9C%AA%E6%8E%88%E6%9D%83/" rel="next" title="漏洞复现-Docker remote api未授权">
+                  漏洞复现-Docker remote api未授权 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
