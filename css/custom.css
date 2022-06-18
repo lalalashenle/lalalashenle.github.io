@@ -1,0 +1,18 @@
+.vsys {
+    display: none !important;
+}
+
+article.panel {
+    /*margin-bottom: 21px;*/
+    background-color: lightgoldenrodyellow;
+    border: 1px solid lightgoldenrodyellow;
+    border-radius: 8px;
+}
+
+/*div.col-md-6 {*/
+/*    width: 33.33%;*/
+/*}*/
+
+nav#nav-main {
+    display: none;
+}
