@@ -25,14 +25,14 @@
 <meta property="og:site_name" content="lalalashenle&#39;s Blog">
 <meta property="og:description" content="DNS重绑定问题尽管在实战中较难遇到，且利用方法复杂，但能够由浅入深衍生很多知识点。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lalalashenle.github.io/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/Development/Blog/hexoblog/source_posts/知识交流-关于SSRF攻击中的DNS重绑定/1.png">
+<meta property="og:image" content="https://lalalashenle.github.io/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/1.png">
 <meta property="article:published_time" content="2023-06-09T06:55:56.000Z">
-<meta property="article:modified_time" content="2023-08-28T10:03:16.834Z">
+<meta property="article:modified_time" content="2025-02-28T12:01:09.041Z">
 <meta property="article:author" content="lalalashenle">
 <meta property="article:tag" content="ssrf">
 <meta property="article:tag" content="DNS重绑定">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lalalashenle.github.io/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/Development/Blog/hexoblog/source_posts/知识交流-关于SSRF攻击中的DNS重绑定/1.png">
+<meta name="twitter:image" content="https://lalalashenle.github.io/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/1.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://lalalashenle.github.io/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/index.html">
   
@@ -381,7 +381,7 @@
 <p>关于SSRF漏洞的概念，简单概括可以理解为”攻击者假冒内网身份获取内网资源”。开发网站时常常会有在某处输入网址的需求，例如显示一个第三方图床中的图片，或者如下图所示显示一个百度页面。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">还是弄个图床的案例比较好</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/Development\Blog\hexoblog\source_posts\知识交流-关于SSRF攻击中的DNS重绑定\1.png" alt="image-20230808195135875"></p>
+<p><img src="/2023/06/09/%E7%9F%A5%E8%AF%86%E4%BA%A4%E6%B5%81-%E5%85%B3%E4%BA%8ESSRF%E6%94%BB%E5%87%BB%E4%B8%AD%E7%9A%84DNS%E9%87%8D%E7%BB%91%E5%AE%9A/1.png" alt="image-20230808195135875"></p>
 
             
         </div>
